@@ -103,103 +103,14 @@ export default function Index() {
             Опыт работы более 10 лет. Гарантия качества.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Dialog open={isBookingOpen} onOpenChange={setIsBookingOpen}>
-              <DialogTrigger asChild>
-                <Button size="lg" className="text-lg px-8 py-6 hover-scale bg-primary hover:bg-primary/90">
-                  <Icon name="Calendar" className="mr-2" size={20} />
-                  Записаться онлайн
-                </Button>
-              </DialogTrigger>
-              <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-                <DialogHeader>
-                  <DialogTitle className="text-2xl">Онлайн запись на обслуживание</DialogTitle>
-                  <DialogDescription>
-                    Выберите услугу, дату и время. Мы свяжемся с вами для подтверждения.
-                  </DialogDescription>
-                </DialogHeader>
-                <div className="grid gap-4 py-4">
-                  <div className="grid gap-2">
-                    <Label htmlFor="service">Услуга *</Label>
-                    <Select value={selectedService} onValueChange={setSelectedService}>
-                      <SelectTrigger id="service">
-                        <SelectValue placeholder="Выберите услугу" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {services.map(service => (
-                          <SelectItem key={service.id} value={service.name}>
-                            {service.name} - {service.price}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div className="grid gap-2">
-                    <Label htmlFor="date">Дата *</Label>
-                    <Input 
-                      id="date" 
-                      type="date" 
-                      value={selectedDate}
-                      onChange={(e) => setSelectedDate(e.target.value)}
-                      min={new Date().toISOString().split('T')[0]}
-                    />
-                  </div>
-                  <div className="grid gap-2">
-                    <Label htmlFor="time">Время *</Label>
-                    <Select value={selectedTime} onValueChange={setSelectedTime}>
-                      <SelectTrigger id="time">
-                        <SelectValue placeholder="Выберите время" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {timeSlots.map(time => (
-                          <SelectItem key={time} value={time}>{time}</SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div className="grid gap-2">
-                    <Label htmlFor="name">Ваше имя *</Label>
-                    <Input 
-                      id="name" 
-                      placeholder="Иван Иванов"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                    />
-                  </div>
-                  <div className="grid gap-2">
-                    <Label htmlFor="phone">Телефон *</Label>
-                    <Input 
-                      id="phone" 
-                      type="tel"
-                      placeholder="+7 (900) 123-45-67"
-                      value={phone}
-                      onChange={(e) => setPhone(e.target.value)}
-                    />
-                  </div>
-                  <div className="grid gap-2">
-                    <Label htmlFor="car">Модель автомобиля</Label>
-                    <Input 
-                      id="car" 
-                      placeholder="Mazda CX-7 2010"
-                      value={carModel}
-                      onChange={(e) => setCarModel(e.target.value)}
-                    />
-                  </div>
-                  <div className="grid gap-2">
-                    <Label htmlFor="comment">Комментарий</Label>
-                    <Textarea 
-                      id="comment" 
-                      placeholder="Опишите проблему или пожелания"
-                      value={comment}
-                      onChange={(e) => setComment(e.target.value)}
-                      rows={3}
-                    />
-                  </div>
-                </div>
-                <Button onClick={handleBooking} size="lg" className="w-full">
-                  Отправить заявку
-                </Button>
-              </DialogContent>
-            </Dialog>
+            <Button 
+              size="lg" 
+              onClick={() => setIsBookingOpen(true)}
+              className="text-lg px-8 py-6 hover-scale bg-primary hover:bg-primary/90"
+            >
+              <Icon name="Calendar" className="mr-2" size={20} />
+              Записаться онлайн
+            </Button>
             <Button size="lg" variant="outline" className="text-lg px-8 py-6 hover-scale bg-white text-foreground hover:bg-gray-100">
               <Icon name="Info" className="mr-2" size={20} />
               Узнать больше
@@ -207,6 +118,100 @@ export default function Index() {
           </div>
         </div>
       </section>
+
+      {isBookingOpen && (
+        <Dialog open={isBookingOpen} onOpenChange={setIsBookingOpen}>
+          <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+            <DialogHeader>
+              <DialogTitle className="text-2xl">Онлайн запись на обслуживание</DialogTitle>
+              <DialogDescription>
+                Выберите услугу, дату и время. Мы свяжемся с вами для подтверждения.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="grid gap-4 py-4">
+              <div className="grid gap-2">
+                <Label htmlFor="service">Услуга *</Label>
+                <Select value={selectedService} onValueChange={setSelectedService}>
+                  <SelectTrigger id="service">
+                    <SelectValue placeholder="Выберите услугу" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {services.map(service => (
+                      <SelectItem key={service.id} value={service.name}>
+                        {service.name} - {service.price}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="date">Дата *</Label>
+                <Input 
+                  id="date" 
+                  type="date" 
+                  value={selectedDate}
+                  onChange={(e) => setSelectedDate(e.target.value)}
+                  min={new Date().toISOString().split('T')[0]}
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="time">Время *</Label>
+                <Select value={selectedTime} onValueChange={setSelectedTime}>
+                  <SelectTrigger id="time">
+                    <SelectValue placeholder="Выберите время" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {timeSlots.map(time => (
+                      <SelectItem key={time} value={time}>{time}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="name">Ваше имя *</Label>
+                <Input 
+                  id="name" 
+                  placeholder="Иван Иванов"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="phone">Телефон *</Label>
+                <Input 
+                  id="phone" 
+                  type="tel"
+                  placeholder="+7 (900) 123-45-67"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="car">Модель автомобиля</Label>
+                <Input 
+                  id="car" 
+                  placeholder="Mazda CX-7 2010"
+                  value={carModel}
+                  onChange={(e) => setCarModel(e.target.value)}
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="comment">Комментарий</Label>
+                <Textarea 
+                  id="comment" 
+                  placeholder="Опишите проблему или пожелания"
+                  value={comment}
+                  onChange={(e) => setComment(e.target.value)}
+                  rows={3}
+                />
+              </div>
+            </div>
+            <Button onClick={handleBooking} size="lg" className="w-full">
+              Отправить заявку
+            </Button>
+          </DialogContent>
+        </Dialog>
+      )}
 
       <section id="services" className="py-20 bg-muted/50">
         <div className="container mx-auto px-4">
